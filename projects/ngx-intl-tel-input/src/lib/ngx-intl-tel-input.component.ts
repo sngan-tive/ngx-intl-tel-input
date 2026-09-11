@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { setTheme } from 'ngx-bootstrap/utils';
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 
 import { CountryCode } from './data/country-code';
 import { CountryISO } from './enums/country-iso.enum';
@@ -91,11 +91,7 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
   onTouched = () => {};
   propagateChange = (_: ChangeData) => {};
 
-  constructor(private countryCodeData: CountryCode) {
-    // If this is not set, ngx-bootstrap will try to use the bs3 CSS (which is not what we've embedded) and will
-    // Add the wrong classes and such
-    setTheme('bs4');
-  }
+  constructor(private countryCodeData: CountryCode) {}
 
   ngOnInit() {
     this.init();
@@ -264,6 +260,12 @@ export class NgxIntlTelInputComponent implements OnInit, OnChanges {
         countryCode: countryCode.toUpperCase(),
         dialCode: '+' + this.selectedCountry.dialCode,
       });
+    }
+  }
+
+  public onDropdownOpenChange(isOpen: boolean, drop: NgbDropdown): void {
+    if (isOpen && this.disabled) {
+      drop.close();
     }
   }
 

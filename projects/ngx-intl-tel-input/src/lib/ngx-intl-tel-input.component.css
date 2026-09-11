@@ -6,6 +6,7 @@ li.iti__country:hover {
 }
 .iti__flag-container.disabled {
   cursor: default !important;
+  pointer-events: none;
 }
 .iti.iti--allow-dropdown .flag-container.disabled:hover .iti__selected-flag {
   background: none;
