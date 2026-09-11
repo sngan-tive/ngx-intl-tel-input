@@ -8,6 +8,18 @@ li.iti__country:hover {
   cursor: default !important;
   pointer-events: none;
 }
+/*
+ * ngbDropdown adds a "dropdown"/"dropup" class to its host element (here,
+ * .iti__flag-container) to match real Bootstrap 5 CSS conventions. Our
+ * vendored bootstrap-dropdown.css sets `.dropdown, .dropup { position:
+ * relative }`, which at equal specificity can clobber the `position:
+ * absolute` intl-tel-input's own CSS relies on to overlay the flag/dial-code
+ * selector on top of the phone input. Pin it back with higher specificity.
+ */
+.iti__flag-container.dropdown,
+.iti__flag-container.dropup {
+  position: absolute;
+}
 .iti.iti--allow-dropdown .flag-container.disabled:hover .iti__selected-flag {
   background: none;
 }
