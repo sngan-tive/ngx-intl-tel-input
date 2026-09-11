@@ -10,12 +10,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        angular_version: ["20", "21"]
+        angular_version: ["21", "22"]
 
     steps:
       - name: Checkout 🔔
         uses: actions/checkout@v4
 
+      # Angular 22 requires Node ^22.22.3 || ^24.15.0 || >=26.0.0 -- revisit this
+      # pin if a future Angular major raises the floor again.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -34,10 +36,21 @@ jobs:
             "19") TS_VERSION="~5.5.0" ;;
             "20") TS_VERSION="~5.8.0" ;;
             "21") TS_VERSION="~5.9.0" ;;
+            "22") TS_VERSION=">=6.0.0 <6.1.0" ;;
             *) echo "Unsupported Angular version"; exit 1 ;;
           esac
           echo "Using TypeScript version $TS_VERSION"
           npm install typescript@$TS_VERSION --save-dev --force
+
+      - name: Determine ng-bootstrap version for Angular ${{ matrix.angular_version }} 🔄
+        run: |
+          case ${{ matrix.angular_version }} in
+            "21") NGB_VERSION="20" ;;
+            "22") NGB_VERSION="21" ;;
+            *) echo "Unsupported Angular version"; exit 1 ;;
+          esac
+          echo "Using @ng-bootstrap/ng-bootstrap version $NGB_VERSION"
+          npm install @ng-bootstrap/ng-bootstrap@$NGB_VERSION --save --force
 
       - name: Install Angular version ${{ matrix.angular_version }}
         run: |
@@ -58,6 +71,7 @@ jobs:
           npm install @angular/cli@${{ matrix.angular_version }} --save-dev --force
           npm install @angular/compiler-cli@${{ matrix.angular_version }} --save-dev --force
           npm install @angular/language-service@${{ matrix.angular_version }} --save-dev --force
+          npm install ng-packagr@${{ matrix.angular_version }} --save-dev --force
 
           npm install --force
 
