@@ -12,9 +12,19 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
       - name: Install and Build 🔧
         run: |
           npm ci
           npm run build_lib
           npm run build
+
+      - name: Run tests 🧪
+        run: |
+          npm test -- --watch=false --browsers=ChromeHeadless
+          npx ng test ngx-intl-tel-input --watch=false --browsers=ChromeHeadless
 
