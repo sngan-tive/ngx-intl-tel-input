@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "prepare": "node -e \"process.exit(process.cwd().includes('node_modules') ? 1 : 0)\" || (npm run build_lib && npm run copy-files && cp -R dist/ngx-intl-tel-input/. .)",
+    "prepare": "npm run build_lib && npm run copy-files && cp -R dist/ngx-intl-tel-input/. .",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
