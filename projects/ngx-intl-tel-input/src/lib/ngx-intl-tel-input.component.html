@@ -19,6 +19,7 @@
           <input
             id="country-search-box"
             [(ngModel)]="countrySearchText"
+            [ngModelOptions]="{ standalone: true }"
             (keyup)="searchCountry()"
             (click)="$event.stopPropagation()"
             [placeholder]="searchCountryPlaceholder"
@@ -68,6 +69,7 @@
     (blur)="onTouched()"
     (keypress)="onInputKeyPress($event)"
     [(ngModel)]="phoneNumber"
+    [ngModelOptions]="{ standalone: true }"
     (ngModelChange)="onPhoneNumberChange()"
     [disabled]="disabled"
     [placeholder]="resolvePlaceholder()"
